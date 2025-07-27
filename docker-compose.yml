@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:17.5
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - delivery-postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - delivery-network
+  pgadmin:
+    image: dpage/pgadmin4:9.5
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@rodrigofolha.com
+      PGADMIN_DEFAULT_PASSWORD: rodrigofolha
+    ports:
+      - 8083:80
+    volumes:
+      - delivery-pgadmin-data:/var/lib/pgadmin
+    networks:
+      - delivery-network
+volumes:
+  delivery-postgres-data:
+  delivery-pgadmin-data:
+networks:
+  delivery-network:
+    driver: bridge
