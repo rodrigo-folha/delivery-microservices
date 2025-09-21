@@ -11,6 +11,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class DeliveryPlacedEvent {
-    private final OffsetDateTime occuredAt;
+    private final OffsetDateTime occurredAt;
     private final UUID deliveryId;
 }

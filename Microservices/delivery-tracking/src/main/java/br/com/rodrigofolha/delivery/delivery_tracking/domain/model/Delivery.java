@@ -11,6 +11,7 @@ import java.util.UUID;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
 import br.com.rodrigofolha.delivery.delivery_tracking.domain.event.DeliveryFulfilledEvent;
+import br.com.rodrigofolha.delivery.delivery_tracking.domain.event.DeliveryPickUpEvent;
 import br.com.rodrigofolha.delivery.delivery_tracking.domain.event.DeliveryPlacedEvent;
 import br.com.rodrigofolha.delivery.delivery_tracking.domain.exception.DomainException;
 import jakarta.persistence.AttributeOverride;
@@ -129,14 +130,14 @@ public class Delivery extends AbstractAggregateRoot<Delivery> {
         verifyIfCanBePlaced();
         this.changeStatusTo(DeliveryStatus.WAITING_FOR_COURIER);
         this.setPlacedAt(OffsetDateTime.now());
-        super.registerEvent(new DeliveryPlacedEvent(this.placedAt, this.getId()));
+        super.registerEvent(new DeliveryPlacedEvent(this.getPlacedAt(), this.getId()));
     }
 
     public void pickUp(UUID courierId) {
         this.setCourierId(courierId);
         this.changeStatusTo(DeliveryStatus.IN_TRANSIT);
         this.setAssignedAt(OffsetDateTime.now());
-        super.registerEvent(new DeliveryPlacedEvent(this.getAssignedAt(), this.getId()));
+        super.registerEvent(new DeliveryPickUpEvent(this.getAssignedAt(), this.getId()));
     }
 
     public void markAsDelivered() {

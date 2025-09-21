@@ -8,5 +8,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CourierIdInput {
-    private UUID courierID;
+    private UUID courierId;
 }

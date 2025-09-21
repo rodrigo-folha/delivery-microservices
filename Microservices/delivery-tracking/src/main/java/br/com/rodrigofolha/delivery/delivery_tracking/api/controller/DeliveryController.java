@@ -63,7 +63,7 @@ public class DeliveryController {
 
     @PostMapping("/{deliveryId}/pickups")
     public void pickup(@PathVariable UUID deliveryId, @Valid @RequestBody CourierIdInput input) {
-        deliveryCheckpointService.pickup(deliveryId, input.getCourierID());
+        deliveryCheckpointService.pickup(deliveryId, input.getCourierId());
     }
 
     @PostMapping("/{deliveryId}/completion")
