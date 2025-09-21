@@ -1,6 +1,7 @@
 package br.com.rodrigofolha.delivery.courier.management.api.controller;
 
 import java.math.BigDecimal;
+import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,7 @@ import br.com.rodrigofolha.delivery.courier.management.domain.service.CourierPay
 import br.com.rodrigofolha.delivery.courier.management.domain.service.CourierRegistrationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -60,8 +62,19 @@ public class CourierController {
         return courierRepository.findById(courierId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    @SneakyThrows
     @PostMapping("/payout-calculation")
     public CourierPayoutResultModel calculate(@RequestBody CourierPayoutCalculationInput input) {
+
+        log.info("Calculating");
+
+        if (Math.random() < 0.5) {
+            throw new RuntimeException();
+        }
+
+        int millis = new Random().nextInt(400);
+        Thread.sleep(millis);
+
         BigDecimal payoutFee = courierPayoutService.calcule(input.getDistanceInKm());
         return new CourierPayoutResultModel(payoutFee);
     }

@@ -1,5 +1,6 @@
 package br.com.rodrigofolha.delivery.delivery_tracking.api.controller;
 
+import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,7 @@ import br.com.rodrigofolha.delivery.delivery_tracking.domain.service.DeliveryChe
 import br.com.rodrigofolha.delivery.delivery_tracking.domain.service.DeliveryPreparationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 
 @RestController
 @RequestMapping("api/v1/deliveries")
@@ -45,8 +47,14 @@ public class DeliveryController {
         return deliveryPreparationService.edit(deliveryId, input);
     }
 
+    @SneakyThrows
     @GetMapping
     public PagedModel<Delivery> findAll(@PageableDefault Pageable pageable) {
+        if (Math.random() < 0.7) {
+            throw new RuntimeException();
+        }
+        int millis = new Random().nextInt(400);
+        Thread.sleep(millis);
         return new PagedModel<>(deliveryRepository.findAll(pageable));
     }
 
