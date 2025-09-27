@@ -59,7 +59,7 @@ delivery-microservices/
 ### Passos:
 
 ```bash
-git clone <URL_DO_REPO>
+git clone https://github.com/rodrigo-folha/delivery-microservices.git
 cd delivery-microservices
 mvn clean install
 docker-compose up -d
